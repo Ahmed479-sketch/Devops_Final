@@ -27,7 +27,7 @@ spec:
     spec:
       containers:
       - name: mongodb
-        image: mongo:latest
+        image: haji12345/course-mongodb:latest
         ports:
         - containerPort: 27017
         env:

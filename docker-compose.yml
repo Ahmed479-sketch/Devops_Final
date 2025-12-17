@@ -3,7 +3,10 @@ version: '3.8'
 services:
   # MongoDB Database
   mongodb:
-    image: mongo:latest
+    build:
+      context: .
+      dockerfile: mongodb/Dockerfile
+    image: haji12345/course-mongodb:latest
     container_name: course-mongodb
     restart: unless-stopped
     ports:

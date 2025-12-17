@@ -14,6 +14,7 @@ env:
   DOCKER_REGISTRY: docker.io
   BACKEND_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/course-backend
   FRONTEND_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/course-frontend
+  MONGODB_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/course-mongodb
 
 jobs:
   # Build and Test Backend
@@ -162,12 +163,34 @@ jobs:
           cache-from: type=registry,ref=${{ env.FRONTEND_IMAGE_NAME }}:buildcache
           cache-to: type=registry,ref=${{ env.FRONTEND_IMAGE_NAME }}:buildcache,mode=max
 
+      - name: Extract metadata for MongoDB
+        id: meta-mongodb
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.MONGODB_IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push MongoDB image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./mongodb/Dockerfile
+          push: true
+          tags: ${{ steps.meta-mongodb.outputs.tags }}
+          labels: ${{ steps.meta-mongodb.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.MONGODB_IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.MONGODB_IMAGE_NAME }}:buildcache,mode=max
+
   # Deploy to Kubernetes
   deploy-kubernetes:
     name: Deploy to Kubernetes
     runs-on: ubuntu-latest
     needs: docker-build-push
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: false  # Disabled - enable when KUBE_CONFIG secret is added
     
     steps:
       - name: Checkout code
@@ -210,7 +233,7 @@ jobs:
     name: Deploy to Staging Server
     runs-on: ubuntu-latest
     needs: docker-build-push
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+    if: false  # Disabled - enable when staging server is configured
     
     steps:
       - name: Checkout code
