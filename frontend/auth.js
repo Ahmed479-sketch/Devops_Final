@@ -1,6 +1,4 @@
-const API_URL = window.location.hostname === 'localhost' 
-  ? 'http://localhost:5000/api' 
-  : 'http://localhost:5000/api';
+const API_URL = 'http://135.171.29.113:5000/api';
 
 // Show message
 function showMessage(message, type = 'success') {
