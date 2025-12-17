@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: course-management
+  labels:
+    name: course-management
+    environment: production

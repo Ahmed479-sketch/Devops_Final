@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Course Management System</h1>
+            <p>Student Registration & Course Enrollment</p>
+            <div class="user-info">
+                <span id="username-display"></span>
+                <button id="logout-btn" class="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('students')">Students</button>
+            <button class="tab-btn" onclick="showTab('courses')">Courses</button>
+            <button class="tab-btn" onclick="showTab('enrollments')">Enrollments</button>
+        </div>
+
+        <!-- Students Tab -->
+        <div id="students-tab" class="tab-content active">
+            <div class="section">
+                <h2>Register New Student</h2>
+                <form id="student-form">
+                    <input type="text" id="student-name" placeholder="Full Name" required>
+                    <input type="email" id="student-email" placeholder="Email" required>
+                    <input type="text" id="student-id" placeholder="Student ID" required>
+                    <button type="submit">Register Student</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>All Students</h2>
+                <div id="students-list" class="list"></div>
+            </div>
+        </div>
+
+        <!-- Courses Tab -->
+        <div id="courses-tab" class="tab-content">
+            <div class="section">
+                <h2>Add New Course</h2>
+                <form id="course-form">
+                    <input type="text" id="course-code" placeholder="Course Code (e.g., CS101)" required>
+                    <input type="text" id="course-name" placeholder="Course Name" required>
+                    <input type="text" id="course-instructor" placeholder="Instructor Name" required>
+                    <input type="number" id="course-credits" placeholder="Credits" min="1" max="6" required>
+                    <input type="number" id="course-capacity" placeholder="Capacity" min="1" value="30" required>
+                    <button type="submit">Add Course</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>Available Courses</h2>
+                <div id="courses-list" class="list"></div>
+            </div>
+        </div>
+
+        <!-- Enrollments Tab -->
+        <div id="enrollments-tab" class="tab-content">
+            <div class="section">
+                <h2>Enroll Student in Course</h2>
+                <form id="enrollment-form">
+                    <select id="enrollment-student" required>
+                        <option value="">Select Student</option>
+                    </select>
+                    <select id="enrollment-course" required>
+                        <option value="">Select Course</option>
+                    </select>
+                    <button type="submit">Enroll</button>
+                </form>
+            </div>
+
+            <div class="section">
+                <h2>All Enrollments</h2>
+                <div id="enrollments-list" class="list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
